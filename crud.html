@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Inventory - MarkeTech Mobile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo-container">
+                    <img src="MarkeTech Mobile Logo.png" alt="MarkeTech Mobile" class="logo-img">
+                    <span class="logo-text">MarkeTech Mobile</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="products.html">Products</a></li>
+                    <li><a href="crud.html" class="active">Manage Inventory</a></li>
+                    <li><a href="analytics.html">Analytics</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Inventory Management</h1>
+            <p>Add, edit, and manage phone inventory</p>
+        </div>
+    </section>
+
+    <!-- CRUD Section -->
+    <div class="container">
+        <div class="crud-container">
+            <!-- Add New Phone Form -->
+            <section class="crud-section">
+                <div class="section-header">
+                    <h2>Add New Phone</h2>
+                    <button id="toggleFormBtn" class="btn-secondary">Show/Hide Form</button>
+                </div>
+                <form id="addPhoneForm" class="phone-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="model">Model *</label>
+                            <input type="text" id="model" name="model" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="storage">Storage *</label>
+                            <input type="text" id="storage" name="storage" placeholder="e.g., 128GB" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ram">RAM *</label>
+                            <input type="text" id="ram" name="ram" placeholder="e.g., 6GB" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="screenSize">Screen Size (inches) *</label>
+                            <input type="text" id="screenSize" name="screenSize" placeholder="e.g., 6.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="camera">Camera (MP) *</label>
+                            <input type="text" id="camera" name="camera" placeholder="e.g., 64+8+2" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="battery">Battery Capacity (mAh) *</label>
+                            <input type="number" id="battery" name="battery" placeholder="e.g., 5000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price ($) *</label>
+                            <input type="text" id="price" name="price" placeholder="e.g., 599" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn">Add Phone</button>
+                        <button type="reset" class="btn-secondary">Clear Form</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Inventory Table -->
+            <section class="crud-section">
+                <div class="section-header">
+                    <h2>Current Inventory</h2>
+                    <div class="search-box">
+                        <input type="text" id="searchInventory" placeholder="Search inventory...">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="inventory-table" id="inventoryTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Model</th>
+                                <th>Storage</th>
+                                <th>RAM</th>
+                                <th>Screen</th>
+                                <th>Camera</th>
+                                <th>Battery</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventoryTableBody">
+                            <tr>
+                                <td colspan="10" class="loading-cell">
+                                    <div class="spinner"></div>
+                                    <span>Loading inventory...</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination" id="pagination">
+                    <!-- Pagination will be generated here -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Phone</h2>
+                <span class="close">&times;</span>
+            </div>
+            <form id="editPhoneForm" class="phone-form">
+                <input type="hidden" id="editRowId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editModel">Model *</label>
+                        <input type="text" id="editModel" name="model" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editStorage">Storage *</label>
+                        <input type="text" id="editStorage" name="storage" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editRam">RAM *</label>
+                        <input type="text" id="editRam" name="ram" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editScreenSize">Screen Size (inches) *</label>
+                        <input type="text" id="editScreenSize" name="screenSize" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCamera">Camera (MP) *</label>
+                        <input type="text" id="editCamera" name="camera" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editBattery">Battery Capacity (mAh) *</label>
+                        <input type="number" id="editBattery" name="battery" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPrice">Price ($) *</label>
+                        <input type="text" id="editPrice" name="price" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn">Update Phone</button>
+                    <button type="button" class="btn-secondary" id="cancelEdit">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="MarkeTech Mobile Logo.png" alt="MarkeTech Mobile" class="footer-logo-img">
+                        <h3>MarkeTech Mobile</h3>
+                    </div>
+                    <p>Your trusted online smartphone marketplace. We make phone shopping simple, transparent, and convenient.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="crud.html">Manage Inventory</a></li>
+                        <li><a href="analytics.html">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns & Warranty</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MarkeTech Mobile. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="crud.js"></script>
+</body>
+</html>
+
