@@ -41,7 +41,7 @@ export default function CRUD() {
       }
       setLoading(false);
     } catch (err) {
-      showToast('Error loading inventory', 'error');
+      showToastMessage('Error loading inventory', 'error');
       setLoading(false);
     }
   };
